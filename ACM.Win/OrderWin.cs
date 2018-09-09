@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ACM.BL;
-using Core.Common;
 
 namespace ACM.Win
 {
@@ -17,6 +9,16 @@ namespace ACM.Win
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            Button button = sender as Button; //geresnis budas castinti ((Button).sender).Metodas()
+            //nes jei nei pakeisti tipo tada nemes exception o padarys default value null tada 
+            //bus galima tikrint per if ir pan. kai naudojasmas as visada naudoti if for null
+
+            if (button!=null)
+            {
+                button.Text = "Processing ...";
+            }
+                       
+
             PlaceOrder();
 
         }
@@ -32,23 +34,34 @@ namespace ACM.Win
             };
 
             var order = new Order();
-            //pupilate order instance// cia per UI 
+            //popilate order instance// cia per UI 
 
-            //var allowSplitOrders = true;
-            //per UI
+            //var allowSplitOrders = true;           
+            //var receiptRequest = true;
+            // per UI
 
             var payment = new Payment();
             //per UI
 
-            //var receiptRequest = true;
-            // per UI
+           
 
             var orderController = new OrderController();
             //orderController.PlaceOrder(customer, order, payment, allowSplitOrders, receiptRequest);
-            orderController.PlaceOrder(customer, order, payment, 
-                allowSplitOrders:true,
-                receiptRequest:false);
-            //pagerina kodo skaityma
+
+            try
+            {
+                orderController.PlaceOrder(customer, order, payment,
+                               allowSplitOrders: true,
+                               receiptRequest: false);
+                                //pagerina kodo skaityma
+            }
+            catch (ArgumentNullException ex)
+            {
+                //log yhe issue 
+                //display a message for usser kad order nesekmingas                
+            }
+
+           
         }
 
     }

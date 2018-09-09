@@ -15,7 +15,7 @@ namespace ACM.BL
 
         public void Update()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

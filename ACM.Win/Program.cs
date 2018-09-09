@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ACM.Win
@@ -14,9 +12,33 @@ namespace ACM.Win
         [STAThread]
         static void Main()
         {
+            //=======================================================================================
+            //globalus exception handler jis skiriasi pagal aplikacijos tipa sis 
+            //skirtas windowsForms
+
+            //for UI thread exceptions
+            Application.ThreadException += 
+                                new ThreadExceptionEventHandler(GlobalExceptionHandler);
+
+            //Force allWindows Forms errors to go through our handler
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+            //For non-UI thread exeptions
+            AppDomain.CurrentDomain.UnhandledException +=
+                                new UnhandledExceptionEventHandler(GlobalExceptionHandler);
+
+
+            //=======================================================================================
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new OrderWin());
+            Application.Run(new PedometerWin());
+        }
+
+        static void GlobalExceptionHandler(object sender, EventArgs e)
+        {
+            //log issue
+            MessageBox.Show("Buvo problema su applilkacija. Susisiekite su suportu!");
+            System.Windows.Forms.Application.Exit();
         }
     }
 }

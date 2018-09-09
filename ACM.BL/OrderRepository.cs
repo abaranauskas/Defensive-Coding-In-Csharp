@@ -10,7 +10,7 @@ namespace ACM.BL
     {
         public void Add(Order order)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

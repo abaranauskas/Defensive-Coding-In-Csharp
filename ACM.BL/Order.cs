@@ -8,6 +8,6 @@ namespace ACM.BL
 {
     public class Order
     {
-        public int Order { get; set; }
+        public int OrderId { get; set; }
     }
 }
